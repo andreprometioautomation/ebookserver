@@ -2,19 +2,16 @@
   "name": "ebookdwnld",
   "version": "0.1.0",
   "private": true,
-  "main": "main.js",
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start"
-   
   },
   "dependencies": {
     "@chakra-ui/next-js": "^2.4.2",
     "@chakra-ui/react": "2",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
-    "electron-is-dev": "^3.0.1",
     "framer-motion": "^12.10.0",
     "next": "15.3.1",
     "pdf-lib": "^1.17.1",
@@ -29,23 +26,6 @@
     "@types/react-dom": "^19",
     "@types/uuid": "^10.0.0",
     "concurrently": "^9.1.2",
-    "electron": "^36.1.0",
-    "electron-builder": "^26.0.12",
     "typescript": "^5"
-  },
-  "build": {
-    "appId": "com.example.myapp",
-    "files": [
-      "main.js",
-      "package.json",
-      "out/**"
-    ],
-    "directories": {
-      "buildResources": "assets",
-      "output": "dist"
-    },
-    "win": {
-      "target": "nsis"
-    }
   }
 }
