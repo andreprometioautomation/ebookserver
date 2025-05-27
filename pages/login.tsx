@@ -16,7 +16,7 @@ import {
 } from '@chakra-ui/react'
 
 // Import your background (or pass in as a prop)
-import bgImage from '@/public/your-bg.jpg'
+import bgImage from '@/public/bg.png'
 
 export default function LoginPage() {
   const [email, setEmail]       = useState('')
@@ -28,7 +28,7 @@ export default function LoginPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
-    const res = await fetch('/api/login', {
+    const res = await fetch('/api/logintoapp', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password }),
