@@ -1,5 +1,6 @@
+// components/SourcesSelector.tsx
 import React from 'react'
-import { useRouter } from 'next/router'
+import NextLink from 'next/link'
 import {
   Box,
   SimpleGrid,
@@ -32,11 +33,14 @@ const sources: Source[] = [
 ]
 
 export function SourcesSelector() {
-  const router = useRouter()
-
   return (
-    <Box bg="gray.900" py={12} px={6}   w="100%"           // ensure full width
-    minH="100vh" >
+    <Box
+      bg="gray.900"
+      w="100%"
+      minH="100vh"
+      py={12}
+      px={6}
+    >
       <Text
         color="white"
         fontSize="4xl"
@@ -49,32 +53,34 @@ export function SourcesSelector() {
 
       <SimpleGrid columns={[1, 2, 3, 4]} spacing={6}>
         {sources.map((src) => (
-          <Card
-            key={src.key}
-            cursor="pointer"
-            onClick={() => router.push(`/${src.key}`)}
-            overflow="hidden"
-            _hover={{ transform: 'scale(1.02)' }}
-            transition="0.2s"
-          >
-            <CardBody p={0}>
-              <Image
-                src={src.image}
-                alt={src.label}
-                objectFit="cover"
-                w="100%"
-                h="150px"
-              />
-              <Box p={4}>
-                <Text fontWeight="bold" mb={1}>
-                  {src.label}
-                </Text>
-                <Text fontSize="sm" color="gray.600">
-                  {src.description}
-                </Text>
-              </Box>
-            </CardBody>
-          </Card>
+          <NextLink key={src.key} href={`/${src.key}`} passHref>
+            {/* Card renders as <a> now, so clicks work */}
+            <Card
+              as="a"
+              cursor="pointer"
+              overflow="hidden"
+              _hover={{ transform: 'scale(1.02)' }}
+              transition="0.2s"
+            >
+              <CardBody p={0}>
+                <Image
+                  src={src.image}
+                  alt={src.label}
+                  objectFit="cover"
+                  w="100%"
+                  h="150px"
+                />
+                <Box p={4}>
+                  <Text fontWeight="bold" mb={1}>
+                    {src.label}
+                  </Text>
+                  <Text fontSize="sm" color="gray.600">
+                    {src.description}
+                  </Text>
+                </Box>
+              </CardBody>
+            </Card>
+          </NextLink>
         ))}
       </SimpleGrid>
     </Box>

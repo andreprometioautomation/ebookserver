@@ -167,9 +167,17 @@ export default function KindlePage() {
                 {b.name}
               </Heading>
               <Link href={b.url} isExternal>
-                <Button colorScheme="green" size="sm">
-                  Descargar PDF
-                </Button>
+              <Button
+  colorScheme="green"
+  size="sm"
+  onClick={() => {
+    const filename = b.url.split('/').pop()
+    if (!filename) return
+    window.location.href = `/api/download?file=${encodeURIComponent(filename)}`
+  }}
+>
+  Descargar PDF
+</Button>
               </Link>
             </CardBody>
           </Card>
