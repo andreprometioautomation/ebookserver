@@ -7,11 +7,7 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "electron": "electron .",
-    "dev:electron": "concurrently \"next dev\" \"yarn electron\"",
-    "lint": "next lint",
-    "postinstall": "electron-builder install-app-deps",
-    "dist": "electron-builder"
+   
   },
   "dependencies": {
     "@chakra-ui/next-js": "^2.4.2",
