@@ -33,7 +33,7 @@ export default async function loginHandler(req: NextApiRequest, res: NextApiResp
     // Create or recover context
     if (!context) {
       context = await firefox.launchPersistentContext(PROFILE_PATH, {
-        headless: false, // Change to true for prod after debugging
+        headless: true, // Change to true for prod after debugging
       });
     }
 
