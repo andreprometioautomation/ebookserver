@@ -5,13 +5,10 @@ import path from 'path';
 import { v4 as uuidv4 } from 'uuid';
 import { PDFDocument } from 'pdf-lib';
 
-const PROFILE_PATH = path.join(process.cwd(), 'firefox-profile');
+const STORAGE_PATH = path.join(process.cwd(), 'storageState.json');
 const SCREENSHOT_ROOT = path.join(process.cwd(), 'screenshots');
-
-const MAX_PAGES = 100;
-
-// Asegura que el directorio exista
 const OUTPUT_DIR = path.join(process.cwd(), 'public', 'output-pdfs');
+const MAX_PAGES = 100;
 
 function ensureDir(dirPath: string) {
   if (!fs.existsSync(dirPath)) {
@@ -19,10 +16,8 @@ function ensureDir(dirPath: string) {
   }
 }
 
-// Genera el PDF desde la carpeta de screenshots específica
 async function createPdfFromScreenshots(requestId: string): Promise<string> {
   const sessionDir = path.join(SCREENSHOT_ROOT, requestId);
-
   const pdfDoc = await PDFDocument.create();
   const files = fs
     .readdirSync(sessionDir)
@@ -58,6 +53,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(400).json({ message: 'ASIN is required' });
   }
 
+  if (!fs.existsSync(STORAGE_PATH)) {
+    return res.status(500).json({ message: 'Storage state file not found. Please login first.' });
+  }
+
   ensureDir(SCREENSHOT_ROOT);
   ensureDir(OUTPUT_DIR);
 
@@ -65,18 +64,22 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const sessionDir = path.join(SCREENSHOT_ROOT, requestId);
   fs.mkdirSync(sessionDir);
 
+  let browser;
   let context: BrowserContext | undefined;
 
   try {
-    context = await firefox.launchPersistentContext(PROFILE_PATH, {
-      headless: true,
+    browser = await firefox.launch({ headless: true });
+
+    context = await browser.newContext({
+      storageState: STORAGE_PATH,
+      // userAgent puede omitirse si no es necesario modificar
     });
 
-    const [page] = context.pages().length ? context.pages() : [await context.newPage()];
+    const page = await context.newPage();
 
     await page.goto('https://leer.amazon.com.mx/kindle-library', { waitUntil: 'networkidle' });
 
-    // Respuesta rápida al frontend
+    // Respuesta rápida para frontend
     res.status(200).json({ message: 'Started capturing the pages', requestId });
 
     await page.goto(`https://leer.amazon.com.mx/?asin=${asin}`, { waitUntil: 'networkidle' });
@@ -105,7 +108,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       pageNum += 1;
     }
 
-    // ✅ Crear PDF automáticamente al finalizar las capturas
     await createPdfFromScreenshots(requestId);
 
   } catch (e) {
@@ -115,5 +117,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
   } finally {
     if (context) await context.close();
+    if (browser) await browser.close();
   }
 }
