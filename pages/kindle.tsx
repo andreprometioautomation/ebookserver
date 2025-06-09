@@ -1,6 +1,4 @@
-// pages/kindle.tsx
 import React, { useState, useEffect } from 'react'
-import { useRouter } from 'next/router'
 import {
   Box,
   Flex,
@@ -12,7 +10,8 @@ import {
   Heading,
   Link,
   useToast,
-  Image as ChakraImage,
+  Input,
+  useDisclosure,
   Modal,
   ModalOverlay,
   ModalContent,
@@ -20,8 +19,6 @@ import {
   ModalCloseButton,
   ModalBody,
   ModalFooter,
-  Input,
-  useDisclosure,
 } from '@chakra-ui/react'
 import bgImage from '@/public/bg.png'
 
@@ -35,21 +32,38 @@ export default function KindlePage() {
   const toast = useToast()
   const { isOpen, onOpen, onClose } = useDisclosure()
 
-  // 1) Login se encarga sólo de autenticar y cargar libros
-  const handleLogin = async () => {
-    const res = await fetch('/api/login', { method: 'POST' })
-    const { message } = await res.json()
-
-    if (res.ok) {
-      setIsLogged(true)
-      toast({ title: 'Logged in', status: 'success', duration: 3000 })
-      fetchBooks()
-    } else {
-      toast({ title: 'Login failed', description: message, status: 'error', duration: 3000 })
+  // Comprobar si existe storageState.json en el backend (simple chequeo)
+  const checkLoginStatus = async () => {
+    try {
+      const res = await fetch('/api/checkLogin')
+      if (res.ok) {
+        const { logged } = await res.json()
+        setIsLogged(logged)
+        if (logged) fetchBooks()
+      } else {
+        setIsLogged(false)
+      }
+    } catch {
+      setIsLogged(false)
     }
   }
 
-  // 2) Trae los PDFs ya generados
+  useEffect(() => {
+    checkLoginStatus()
+  }, [])
+
+  // Abre ventana para login manual con Playwright
+  const handleManualLogin = () => {
+    // Abre ventana externa para login (por ejemplo, a una ruta que lanza el navegador Playwright para login)
+    window.open('/api/generateStorage', '_blank', 'width=600,height=700')
+    toast({
+      title: 'Abre la ventana y realiza login manual',
+      description: 'Después cierra la ventana para continuar',
+      status: 'info',
+      duration: 6000,
+    })
+  }
+
   const fetchBooks = async () => {
     try {
       const res = await fetch('/api/listBooks')
@@ -57,11 +71,10 @@ export default function KindlePage() {
       const data: Book[] = await res.json()
       setBooks(data)
     } catch {
-      toast({ title: 'Error loading books', status: 'error', duration: 3000 })
+      toast({ title: 'Error cargando libros', status: 'error', duration: 3000 })
     }
   }
 
-  // 3) Llama a tu endpoint de capture y refresca la lista
   const handleCapture = async () => {
     if (!asin.trim()) {
       toast({ title: 'ASIN requerido', status: 'warning', duration: 3000 })
@@ -77,18 +90,27 @@ export default function KindlePage() {
       const data = await res.json()
       if (!res.ok) throw new Error(data.message || 'Error')
 
-      toast({ title: 'PDF creado', description: 'Listo para descargar.', status: 'success', duration: 3000 })
+      toast({
+        title: 'PDF creado',
+        description: 'Listo para descargar.',
+        status: 'success',
+        duration: 3000,
+      })
       fetchBooks()
       onClose()
       setAsin('')
     } catch (err: any) {
-      toast({ title: 'Error creando PDF', description: err.message, status: 'error', duration: 3000 })
+      toast({
+        title: 'Error creando PDF',
+        description: err.message,
+        status: 'error',
+        duration: 3000,
+      })
     } finally {
       setLoadingCapture(false)
     }
   }
 
-  // 4) Splash hasta que inicies sesión
   if (!isLogged) {
     return (
       <Flex
@@ -103,21 +125,25 @@ export default function KindlePage() {
           <Text fontSize="4xl" color="white" mb={6}>
             Kindle Library
           </Text>
-          <Button colorScheme="orange" size="lg" onClick={handleLogin}>
-            Iniciar sesión
+          <Button colorScheme="orange" size="lg" onClick={handleManualLogin}>
+            Iniciar sesión manualmente
           </Button>
+          <Text mt={4} color="gray.300" fontSize="sm">
+            Se abrirá una ventana para que inicies sesión en Amazon Kindle. Después de cerrar esa ventana,
+            vuelve aquí y la sesión estará lista.
+          </Text>
         </Box>
       </Flex>
     )
   }
 
-  // 5) Pantalla tras login: botón para modal + grid de PDFs
   return (
     <Box bg="gray.900" minH="100vh" py={10} px={6}>
-      {/* —– MODAL DE CAPTURAR ASIN —– */}
       <Modal
         isOpen={isOpen}
-        onClose={() => { if (!loadingCapture) onClose() }}
+        onClose={() => {
+          if (!loadingCapture) onClose()
+        }}
         isCentered
       >
         <ModalOverlay />
@@ -125,19 +151,10 @@ export default function KindlePage() {
           <ModalHeader>Introduce ASIN</ModalHeader>
           <ModalCloseButton disabled={loadingCapture} />
           <ModalBody>
-            <Input
-              placeholder="ASIN"
-              value={asin}
-              onChange={(e) => setAsin(e.target.value)}
-            />
+            <Input placeholder="ASIN" value={asin} onChange={(e) => setAsin(e.target.value)} />
           </ModalBody>
           <ModalFooter>
-            <Button
-              onClick={handleCapture}
-              isLoading={loadingCapture}
-              colorScheme="purple"
-              mr={3}
-            >
+            <Button onClick={handleCapture} isLoading={loadingCapture} colorScheme="purple" mr={3}>
               Crear PDF
             </Button>
             <Button onClick={onClose} variant="ghost" disabled={loadingCapture}>
@@ -151,14 +168,12 @@ export default function KindlePage() {
         AMAZON BOOKS
       </Heading>
 
-      {/* Aquí está tu botón que abre el modal */}
       <Box textAlign="center" mb={6}>
         <Button colorScheme="purple" onClick={onOpen}>
           Capturar ASIN
         </Button>
       </Box>
 
-      {/* Grid de descargas */}
       <SimpleGrid columns={[1, 2, 3, 4]} spacing={6}>
         {books.map((b, i) => (
           <Card key={i} bg="blackAlpha.800">
@@ -167,17 +182,17 @@ export default function KindlePage() {
                 {b.name}
               </Heading>
               <Link href={b.url} isExternal>
-              <Button
-  colorScheme="green"
-  size="sm"
-  onClick={() => {
-    const filename = b.url.split('/').pop()
-    if (!filename) return
-    window.location.href = `/api/download?file=${encodeURIComponent(filename)}`
-  }}
->
-  Descargar PDF
-</Button>
+                <Button
+                  colorScheme="green"
+                  size="sm"
+                  onClick={() => {
+                    const filename = b.url.split('/').pop()
+                    if (!filename) return
+                    window.location.href = `/api/download?file=${encodeURIComponent(filename)}`
+                  }}
+                >
+                  Descargar PDF
+                </Button>
               </Link>
             </CardBody>
           </Card>
