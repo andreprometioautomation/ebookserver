@@ -1,0 +1,213 @@
+{
+  "cookies": [
+    {
+      "name": "id_pkel",
+      "value": "n0",
+      "domain": "www.amazon.com.mx",
+      "path": "/",
+      "expires": 1749489200,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "Strict"
+    },
+    {
+      "name": "id_pk",
+      "value": "eyJuIjoiMCJ9",
+      "domain": "www.amazon.com.mx",
+      "path": "/",
+      "expires": 1749489200,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "Strict"
+    },
+    {
+      "name": "csm-hit",
+      "value": "tb:YC1QDZDFAP2NMAF9MECR+s-TBX6C2YC42051CCD3HPF|1749488301682&t:1749488301682&adb:adblk_no",
+      "domain": "www.amazon.com.mx",
+      "path": "/",
+      "expires": 1779728301,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "None"
+    },
+    {
+      "name": "at-acbmx",
+      "value": "Atza|IwEBIIbOnePPRNQT1F2wF2O7KmUrh0mKUFHNMxkwfLnZTvz7R1U7Wx8zlj-3zqXbtdAWL7Maxsv7ZdTd5vwZXhc8sqJ8tkiyD_xWLahVpMrz3VpMnpesrkTqO8aY2AGdk59FPi2eU68H4OkNC9odTqzImC1WDW2SEzAnO3Exi6dgoOxOmh_A4VGNGV6hPB8A2SIcrDRLW6yjf_9lS9C6TXs-0mzxvSfOQ9eQr4BWuJaKreieow",
+      "domain": ".amazon.com.mx",
+      "path": "/",
+      "expires": 1781024305,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "sess-at-acbmx",
+      "value": "\"G8Q4OI8KN5RjkqhxHmmTuKsBIpN8dwEyddp3ynTQkDQ=\"",
+      "domain": ".amazon.com.mx",
+      "path": "/",
+      "expires": 1781024305,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "session-id",
+      "value": "131-0204511-6378752",
+      "domain": ".amazon.com.mx",
+      "path": "/",
+      "expires": 1781024306,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "ubid-acbmx",
+      "value": "133-4205648-2799734",
+      "domain": ".amazon.com.mx",
+      "path": "/",
+      "expires": 1781024306,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "session-token",
+      "value": "\"HRwimErFcKbd16tM6jUi8jE5af1X1VZVNJ1CTfAZ6nchaCwxh5YvLGqQ5Yn1rmBi32q7C6I1lvwt0frPrbKnwlirl1nnXhuU6PCrzGgvqlMBbglikx0iRWsTWRiJIXTPGyDCHDy1zSHmS6ijmHPhzwOHPete5nxmbGChI4M/nCa0uem81c40ZMAmZ1JhEmleAZjlrf+pY+dtHT9UrFr3cIxpiZ6M23NiYQ0RWC5LGBkbwO9F4hcOwYQjmgHLzmLgFqggGm8YxHzaBlLpmpaK+l2/2ulkuYqFC+xu6L3iEXLTVqaHDXD3lpJ0rFX56r7G4zM81YP+OsaKMItsfdP5CR7yprZ+HQwya8BopqDPlinMAk1Y5dcrDQ==\"",
+      "domain": ".amazon.com.mx",
+      "path": "/",
+      "expires": 1781024306,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "session-id-time",
+      "value": "2082787201l",
+      "domain": ".amazon.com.mx",
+      "path": "/",
+      "expires": 1781024306,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "x-acbmx",
+      "value": "\"7HisqAp6KQchmX7N@aX6NCrOP02chU?FxbbWvLKJ7jqHtPVoeuRUQuYTT29KXeYC\"",
+      "domain": ".amazon.com.mx",
+      "path": "/",
+      "expires": 1781024306,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "i18n-prefs",
+      "value": "MXN",
+      "domain": ".amazon.com.mx",
+      "path": "/",
+      "expires": 1781024306,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "None"
+    },
+    {
+      "name": "lc-acbmx",
+      "value": "es_MX",
+      "domain": ".amazon.com.mx",
+      "path": "/",
+      "expires": 1781024306,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "None"
+    },
+    {
+      "name": "csm-hit",
+      "value": "tb:s-QJ29YY8916MEDMW7306P|1749488546117&t:1749488546159&adb:adblk_no",
+      "domain": "leer.amazon.com.mx",
+      "path": "/",
+      "expires": 1779728546,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "None"
+    }
+  ],
+  "origins": [
+    {
+      "origin": "https://leer.amazon.com.mx",
+      "localStorage": [
+        {
+          "name": "csa-ctoken-67K7KE15HTEEDDGHKET8",
+          "value": "1749491889024"
+        },
+        {
+          "name": "csa-ctoken-DFZ9FZ7HK3ZRWXS62NNJ",
+          "value": "1749491701723"
+        },
+        {
+          "name": "notebook_breadcrumbs",
+          "value": "[]"
+        },
+        {
+          "name": "csa-ctoken-ZNZ9AC5W0KS8533JZGNE",
+          "value": "1749491906122"
+        },
+        {
+          "name": "last_view_type",
+          "value": "cover"
+        },
+        {
+          "name": "originType",
+          "value": "null"
+        },
+        {
+          "name": "csa-ctoken-QJ29YY8916MEDMW7306P",
+          "value": "1749492146164"
+        },
+        {
+          "name": "resourceType",
+          "value": "null"
+        },
+        {
+          "name": "csm:adb",
+          "value": "adblk_no"
+        },
+        {
+          "name": "csa-ctoken-7VYGGV4FPSFXY4JYPMN6",
+          "value": "1749492018569"
+        },
+        {
+          "name": "csm-hit",
+          "value": "tb:s-QJ29YY8916MEDMW7306P|1749488546117&t:1749488546159&adb:adblk_no"
+        },
+        {
+          "name": "csa-tabbed-browsing",
+          "value": "{\"lastActive\":{\"visible\":true,\"pid\":\"mnpqh8-xqzu4p-dv1aqq-ekilfi\",\"tid\":\"7jfazb-4c6waj-56uget-sweden\",\"ent\":{\"rid\":\"ZNZ9AC5W0KS8533JZGNE\",\"ety\":\"KindleWebLibrary\",\"esty\":\"Library\"}},\"lastInteraction\":{\"id\":\"4x5i8u-vy6ir1-dg8rmm-6q3z25\",\"used\":true},\"time\":1749488546164,\"initialized\":true}"
+        },
+        {
+          "name": "tabView",
+          "value": "all"
+        },
+        {
+          "name": "collection",
+          "value": "null"
+        },
+        {
+          "name": "localStatus",
+          "value": "null"
+        },
+        {
+          "name": "deleted_samples",
+          "value": "{}"
+        },
+        {
+          "name": "last_sort_type",
+          "value": "recency"
+        },
+        {
+          "name": "csm-bf",
+          "value": "[\"QJ29YY8916MEDMW7306P\",\"7VYGGV4FPSFXY4JYPMN6\",\"ZNZ9AC5W0KS8533JZGNE\",\"67K7KE15HTEEDDGHKET8\",\"DFZ9FZ7HK3ZRWXS62NNJ\"]"
+        }
+      ]
+    }
+  ]
+}
