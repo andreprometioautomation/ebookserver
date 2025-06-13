@@ -32,7 +32,7 @@ export default function KindlePage() {
   const toast = useToast()
   const { isOpen, onOpen, onClose } = useDisclosure()
 
-  // Comprobar si existe storageState.json en el backend (simple chequeo)
+  // Check if storageState.json exists on backend (simple check)
   const checkLoginStatus = async () => {
     try {
       const res = await fetch('/api/checkLogin')
@@ -52,13 +52,13 @@ export default function KindlePage() {
     checkLoginStatus()
   }, [])
 
-  // Abre ventana para login manual con Playwright
+  // Opens manual login window with Playwright
   const handleManualLogin = () => {
-    // Abre ventana externa para login (por ejemplo, a una ruta que lanza el navegador Playwright para login)
+    // Opens external window for login (e.g., to a route that launches Playwright browser)
     window.open('/api/generateStorage', '_blank', 'width=600,height=700')
     toast({
-      title: 'Abre la ventana y realiza login manual',
-      description: 'Después cierra la ventana para continuar',
+      title: 'Login window opened',
+      description: 'After logging in, close the window to continue',
       status: 'info',
       duration: 6000,
     })
@@ -71,13 +71,13 @@ export default function KindlePage() {
       const data: Book[] = await res.json()
       setBooks(data)
     } catch {
-      toast({ title: 'Error cargando libros', status: 'error', duration: 3000 })
+      toast({ title: 'Error loading books', status: 'error', duration: 3000 })
     }
   }
 
   const handleCapture = async () => {
     if (!asin.trim()) {
-      toast({ title: 'ASIN requerido', status: 'warning', duration: 3000 })
+      toast({ title: 'ASIN required', status: 'warning', duration: 3000 })
       return
     }
     setLoadingCapture(true)
@@ -91,8 +91,8 @@ export default function KindlePage() {
       if (!res.ok) throw new Error(data.message || 'Error')
 
       toast({
-        title: 'PDF creado',
-        description: 'Listo para descargar.',
+        title: 'PDF created',
+        description: 'Ready to download.',
         status: 'success',
         duration: 3000,
       })
@@ -101,7 +101,7 @@ export default function KindlePage() {
       setAsin('')
     } catch (err: any) {
       toast({
-        title: 'Error creando PDF',
+        title: 'Error creating PDF',
         description: err.message,
         status: 'error',
         duration: 3000,
@@ -126,11 +126,11 @@ export default function KindlePage() {
             Kindle Library
           </Text>
           <Button colorScheme="orange" size="lg" onClick={handleManualLogin}>
-            Iniciar sesión manualmente
+            Login manually
           </Button>
           <Text mt={4} color="gray.300" fontSize="sm">
-            Se abrirá una ventana para que inicies sesión en Amazon Kindle. Después de cerrar esa ventana,
-            vuelve aquí y la sesión estará lista.
+            A window will open for you to log in to Amazon Kindle. After closing it, come back here and
+            your session will be ready.
           </Text>
         </Box>
       </Flex>
@@ -148,17 +148,17 @@ export default function KindlePage() {
       >
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Introduce ASIN</ModalHeader>
+          <ModalHeader>Enter ASIN</ModalHeader>
           <ModalCloseButton disabled={loadingCapture} />
           <ModalBody>
             <Input placeholder="ASIN" value={asin} onChange={(e) => setAsin(e.target.value)} />
           </ModalBody>
           <ModalFooter>
             <Button onClick={handleCapture} isLoading={loadingCapture} colorScheme="purple" mr={3}>
-              Crear PDF
+              Create PDF
             </Button>
             <Button onClick={onClose} variant="ghost" disabled={loadingCapture}>
-              Cancelar
+              Cancel
             </Button>
           </ModalFooter>
         </ModalContent>
@@ -170,7 +170,7 @@ export default function KindlePage() {
 
       <Box textAlign="center" mb={6}>
         <Button colorScheme="purple" onClick={onOpen}>
-          Capturar ASIN
+          Capture ASIN
         </Button>
       </Box>
 
@@ -191,7 +191,7 @@ export default function KindlePage() {
                     window.location.href = `/api/download?file=${encodeURIComponent(filename)}`
                   }}
                 >
-                  Descargar PDF
+                  Download PDF
                 </Button>
               </Link>
             </CardBody>
