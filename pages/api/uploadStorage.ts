@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import fs from 'fs'
 import path from 'path'
-import formidable, { File } from 'formidable'
+import formidable, { File, Files } from 'formidable'
 
 export const config = {
   api: {
@@ -24,7 +24,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     keepExtensions: true,
   })
 
-  form.parse(req, (err, fields, files: { [key: string]: File | File[] }) => {
+  form.parse(req, (err, fields, files: Files) => {
     if (err) {
       console.error('❌ Error parsing file:', err)
       return res.status(500).json({ message: 'Upload error' })
